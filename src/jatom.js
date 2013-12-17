@@ -31,6 +31,9 @@ JAtom.prototype = {
             item.id = t.find('id').eq(0).text();
             item.author = t.find('author name').eq(0).text();
 
+            item.image = jQuery(item.content).find('img').eq(0).attr('src');
+            if (!item.image) item.image = jQuery(item.description).find('img').eq(0).attr('src');
+
             t.find('link').each(function() {
                 var t = jQuery(this);
                 var rel = t.attr('rel');

@@ -7,6 +7,7 @@ JFeedItem.prototype = {
     coordinates: null,
     description: '',
     enclosure: null,
+    image: null,
     id: '',
     link: '',
     title: '',

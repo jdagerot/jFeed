@@ -92,6 +92,7 @@ JFeedItem.prototype = {
     coordinates: null,
     description: '',
     enclosure: null,
+    image: null,
     id: '',
     link: '',
     title: '',
@@ -130,6 +131,9 @@ JAtom.prototype = {
             item.updated = t.find('updated').eq(0).text();
             item.id = t.find('id').eq(0).text();
             item.author = t.find('author name').eq(0).text();
+
+            item.image = jQuery(item.content).find('img').eq(0).attr('src');
+            if (!item.image) item.image = jQuery(item.description).find('img').eq(0).attr('src');
 
             t.find('link').each(function() {
                 var t = jQuery(this);
@@ -199,6 +203,9 @@ JRss.prototype  = {
 
             item.content = t.find('content\\:encoded').eq(0).text();
             if (!item.content) item.content = t.find('encoded').eq(0).text();
+
+            item.image = jQuery(item.content).find('img').eq(0).attr('src');
+            if (!item.image) item.image = jQuery(item.description).find('img').eq(0).attr('src');
 
             item.author = t.find('dc\\:creator').eq(0).text();
             if (!item.author) item.author = t.find('creator').eq(0).text();

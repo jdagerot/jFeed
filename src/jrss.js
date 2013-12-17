@@ -35,6 +35,9 @@ JRss.prototype  = {
             item.content = t.find('content\\:encoded').eq(0).text();
             if (!item.content) item.content = t.find('encoded').eq(0).text();
 
+            item.image = jQuery(item.content).find('img').eq(0).attr('src');
+            if (!item.image) item.image = jQuery(item.description).find('img').eq(0).attr('src');
+
             item.author = t.find('dc\\:creator').eq(0).text();
             if (!item.author) item.author = t.find('creator').eq(0).text();
 
