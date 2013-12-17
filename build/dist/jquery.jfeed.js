@@ -1,5 +1,6 @@
 /* jFeed : jQuery feed parser plugin
  * Copyright (C) 2007 Jean-François Hovinne - http://www.hovinne.com/
+ * Modifications (C) 2013 Scott Webber, Roovy, Inc. - http://roovy.com
  * Dual licensed under the MIT (MIT-license.txt)
  * and GPL (GPL-license.txt) licenses.
  */
