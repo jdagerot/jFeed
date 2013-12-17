@@ -28,6 +28,7 @@ JAtom.prototype = {
             item.description = jQuery(this).find('content').eq(0).text();
             item.updated = jQuery(this).find('updated').eq(0).text();
             item.id = jQuery(this).find('id').eq(0).text();
+            item.author = jQuery(this).find('author name').eq(0).text();
             var point = jQuery(this).find('[nodeName="georss:point"]').eq(0).text();
             if (point.length > 0) {
               point = point.split(" ");
