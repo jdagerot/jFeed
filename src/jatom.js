@@ -22,17 +22,20 @@ JAtom.prototype = {
         jQuery('entry', xml).each( function() {
 
             var item = new JFeedItem();
+            var t = jQuery(this);
 
-            item.title = jQuery(this).find('title').eq(0).text();
-            item.link = jQuery(this).find('link').eq(0).text();
-            item.description = jQuery(this).find('content').eq(0).text();
-            item.updated = jQuery(this).find('updated').eq(0).text();
-            item.id = jQuery(this).find('id').eq(0).text();
-            item.author = jQuery(this).find('author name').eq(0).text();
-            var point = jQuery(this).find('[nodeName="georss:point"]').eq(0).text();
+            item.title = t.find('title').eq(0).text();
+            item.link = t.find('link').eq(0).text();
+            item.description = t.find('content').eq(0).text();
+            item.content = t.find('content').eq(0).text();
+            item.updated = t.find('updated').eq(0).text();
+            item.id = t.find('id').eq(0).text();
+            item.author = t.find('author name').eq(0).text();
+
+            var point = t.find('[nodeName="georss:point"]').eq(0).text();
             if (point.length > 0) {
-              point = point.split(" ");
-              item.geometry = { type: "Point", coordinates: [point[1], point[0]] };
+                point = point.split(" ");
+                item.coordinates = [point[1], point[0]];
             }
 
             feed.items.push(item);

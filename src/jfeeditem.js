@@ -2,12 +2,13 @@ function JFeedItem() {};
 
 JFeedItem.prototype = {
 
-    title: '',
-    link: '',
+    author: '',
+    content: '',
     description: '',
-    updated: '',
+    coordinates: '',
     id: '',
-    geometry: '',
-    author: ''
+    link: '',
+    title: '',
+    updated: ''
 };
 
