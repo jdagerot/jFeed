@@ -38,7 +38,8 @@ JRss.prototype  = {
             item.author = t.find('dc\\:creator').eq(0).text();
             if (!item.author) item.author = t.find('creator').eq(0).text();
 
-            var point = t.find('[nodeName="georss:point"]').eq(0).text();
+            var point = t.find('georss\\:point').eq(0).text();
+            if (!point) point = t.find('point').eq(0).text();
             if (point.length > 0) {
                 point = point.split(" ");
                 item.coordinates = [point[1], point[0]];
