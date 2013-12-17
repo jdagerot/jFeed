@@ -3,6 +3,7 @@
  * Dual licensed under the MIT (MIT-license.txt)
  * and GPL (GPL-license.txt) licenses.
  */
+(function(window, undefined) {
 
 jQuery.getFeed = function(options) {
 
@@ -19,7 +20,7 @@ jQuery.getFeed = function(options) {
     }, options);
 
     if (options.url) {
-        
+
         if (jQuery.isFunction(options.failure) && jQuery.type(options.error)==='null') {
           // Handle legacy failure option
           options.error = function(xhr, msg, e){
@@ -83,3 +84,7 @@ JFeed.prototype = {
     }
 };
 
+    // Expose JFeed to the global object
+    window.JFeed = JFeed;
+
+})(window);
