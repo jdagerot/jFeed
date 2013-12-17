@@ -45,6 +45,14 @@ JRss.prototype  = {
                 item.coordinates = [point[1], point[0]];
             }
 
+            var enclosure = t.find('enclosure');
+            if (enclosure.length > 0) {
+                item.enclosure = {
+                    url: enclosure.attr('url'),
+                    type: enclosure.attr('type')
+                }
+            }
+
             feed.items.push(item);
         });
     }

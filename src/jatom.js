@@ -25,12 +25,31 @@ JAtom.prototype = {
             var t = jQuery(this);
 
             item.title = t.find('title').eq(0).text();
-            item.link = t.find('link').eq(0).text();
             item.description = t.find('content').eq(0).text();
             item.content = t.find('content').eq(0).text();
             item.updated = t.find('updated').eq(0).text();
             item.id = t.find('id').eq(0).text();
             item.author = t.find('author name').eq(0).text();
+
+            t.find('link').each(function() {
+                var t = jQuery(this);
+                var rel = t.attr('rel');
+
+                if (rel == 'enclosure') {
+                    item.enclosure = {
+                        url: t.attr('url'),
+                        type: t.attr('type')
+                    }
+                }
+
+                /*
+                 * RFC 4287 - 4.2.7.2: take first encountered 'link' node
+                 *                     to be of the 'alternate' type.
+                 */
+                if ((rel == 'alternate') || (!rel && !item.link)) {
+                    item.link = t.attr('href');
+                }
+            });
 
             var point = t.find('georss\\:point').eq(0).text();
             if (!point) point = t.find('point').eq(0).text();

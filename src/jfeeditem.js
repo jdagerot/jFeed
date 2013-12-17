@@ -4,8 +4,9 @@ JFeedItem.prototype = {
 
     author: '',
     content: '',
+    coordinates: null,
     description: '',
-    coordinates: '',
+    enclosure: null,
     id: '',
     link: '',
     title: '',
