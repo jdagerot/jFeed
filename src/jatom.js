@@ -19,9 +19,10 @@ JAtom.prototype = {
 
         var feed = this;
 
-        jQuery('entry', xml).each( function() {
+        jQuery('entry', xml).each(function() {
 
             var item = new JFeedItem();
+
             var t = jQuery(this);
 
             item.title = t.find('title').eq(0).text();
@@ -61,8 +62,8 @@ JAtom.prototype = {
                 item.coordinates = [point[1], point[0]];
             }
 
+
             feed.items.push(item);
         });
     }
 };
-

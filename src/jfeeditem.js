@@ -13,4 +13,3 @@ JFeedItem.prototype = {
     title: '',
     updated: ''
 };
-

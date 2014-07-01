@@ -6,83 +6,83 @@
  */
 (function(window, undefined) {
 
-jQuery.getFeed = function(options) {
+    jQuery.getFeed = function(options) {
 
-    options = jQuery.extend({
+        options = jQuery.extend({
 
-        url: null,
-        data: null,
-        cache: true,
-        success: null,
-        failure: null,
-        error: null,
-        global: true
+            url: null,
+            data: null,
+            cache: true,
+            success: null,
+            failure: null,
+            error: null,
+            global: true
 
-    }, options);
+        }, options);
 
-    if (options.url) {
+        if (options.url) {
 
-        if (jQuery.isFunction(options.failure) && jQuery.type(options.error)==='null') {
-          // Handle legacy failure option
-          options.error = function(xhr, msg, e){
-            options.failure(msg, e);
-          }
-        } else if (jQuery.type(options.failure) === jQuery.type(options.error) === 'null') {
-          // Default error behavior if failure & error both unspecified
-          options.error = function(xhr, msg, e){
-            window.console&&console.log('getFeed failed to load feed', xhr, msg, e);
-          }
+            if (jQuery.isFunction(options.failure) && jQuery.type(options.error) === 'null') {
+                // Handle legacy failure option
+                options.error = function(xhr, msg, e) {
+                    options.failure(msg, e);
+                }
+            } else if (jQuery.type(options.failure) === jQuery.type(options.error) === 'null') {
+                // Default error behavior if failure & error both unspecified
+                options.error = function(xhr, msg, e) {
+                    window.console && console.log('getFeed failed to load feed', xhr, msg, e);
+                }
+            }
+
+            return jQuery.ajax({
+                type: 'GET',
+                url: options.url,
+                data: options.data,
+                cache: options.cache,
+                dataType: 'xml',
+                success: function(xml) {
+                    var feed = new JFeed(xml);
+                    if (jQuery.isFunction(options.success)) options.success(feed);
+                },
+                error: options.error,
+                global: options.global
+            });
         }
+    };
 
-        return jQuery.ajax({
-            type: 'GET',
-            url: options.url,
-            data: options.data,
-            cache: options.cache,
-            dataType: 'xml',
-            success: function(xml) {
-                var feed = new JFeed(xml);
-                if (jQuery.isFunction(options.success)) options.success(feed);
-            },
-            error: options.error,
-            global: options.global
-        });
-    }
-};
+    function JFeed(xml) {
+        if (xml) this.parse(xml);
+    };
 
-function JFeed(xml) {
-    if (xml) this.parse(xml);
-}
-;
+    JFeed.prototype = {
 
-JFeed.prototype = {
+        type: '',
+        version: '',
+        title: '',
+        link: '',
+        description: '',
+        parse: function(xml) {
 
-    type: '',
-    version: '',
-    title: '',
-    link: '',
-    description: '',
-    parse: function(xml) {
+            if (jQuery('channel', xml).length == 1) {
 
-        if (jQuery('channel', xml).length == 1) {
+                this.type = 'rss';
+                var feedClass = new JRss(xml);
 
-            this.type = 'rss';
-            var feedClass = new JRss(xml);
+            } else if (jQuery('feed', xml).length == 1) {
 
-        } else if (jQuery('feed', xml).length == 1) {
+                this.type = 'atom';
+                var feedClass = new JAtom(xml);
+            }
 
-            this.type = 'atom';
-            var feedClass = new JAtom(xml);
+            if (feedClass) jQuery.extend(this, feedClass);
         }
-
-        if (feedClass) jQuery.extend(this, feedClass);
-    }
-};
+    };
 
     // Expose JFeed to the global object
     window.JFeed = JFeed;
 
 })(window);
+
 function JFeedItem() {};
 
 JFeedItem.prototype = {
@@ -120,7 +120,7 @@ JAtom.prototype = {
 
         var feed = this;
 
-        jQuery('entry', xml).each( function() {
+        jQuery('entry', xml).each(function() {
 
             var item = new JFeedItem();
             var t = jQuery(this);
@@ -171,11 +171,11 @@ function JRss(xml) {
     this._parse(xml);
 };
 
-JRss.prototype  = {
+JRss.prototype = {
 
     _parse: function(xml) {
 
-        if(jQuery('rss', xml).length == 0) this.version = '1.0';
+        if (jQuery('rss', xml).length == 0) this.version = '1.0';
         else this.version = jQuery('rss', xml).eq(0).attr('version');
 
         var channel = jQuery('channel', xml).eq(0);
@@ -190,7 +190,7 @@ JRss.prototype  = {
 
         var feed = this;
 
-        jQuery('item', xml).each( function() {
+        jQuery('item', xml).each(function() {
 
             var item = new JFeedItem();
             var t = jQuery(this);
@@ -229,4 +229,3 @@ JRss.prototype  = {
         });
     }
 };
-

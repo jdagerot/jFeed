@@ -24,6 +24,7 @@ JRss.prototype = {
         jQuery('item', xml).each(function() {
 
             var item = new JFeedItem();
+
             var t = jQuery(this);
 
             item.title = t.find('title').eq(0).text();
@@ -64,7 +65,6 @@ JRss.prototype = {
                     item[nodeName] = this.innerHTML;
                 }
             });
-
 
             feed.items.push(item);
         });
