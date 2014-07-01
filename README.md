@@ -49,6 +49,9 @@ JFeedItem properties
 -   `item.updated`
 -   `item.id`
 
+In adition to these above (and I belive there are more items actually, like geo-location for example) there's an iteration that loops through all items in the RSS-item-tree and adds those that hasn't been treaded earlier.
+
+
 Please see the provided examples for more information.
 
 A basic PHP proxy is also available (`proxy.php`), if you need to load
