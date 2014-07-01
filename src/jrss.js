@@ -2,11 +2,11 @@ function JRss(xml) {
     this._parse(xml);
 };
 
-JRss.prototype  = {
+JRss.prototype = {
 
     _parse: function(xml) {
 
-        if(jQuery('rss', xml).length == 0) this.version = '1.0';
+        if (jQuery('rss', xml).length == 0) this.version = '1.0';
         else this.version = jQuery('rss', xml).eq(0).attr('version');
 
         var channel = jQuery('channel', xml).eq(0);
@@ -21,7 +21,7 @@ JRss.prototype  = {
 
         var feed = this;
 
-        jQuery('item', xml).each( function() {
+        jQuery('item', xml).each(function() {
 
             var item = new JFeedItem();
             var t = jQuery(this);
@@ -56,8 +56,16 @@ JRss.prototype  = {
                 }
             }
 
+            // Now let's go through all items and those not covered above will just be added by their native innerhtml code:
+            t.children().each(function() {
+                var nodeName = this.nodeName.toLowerCase();
+                if (typeof item[nodeName] === 'undefined' || item[nodeName] === '') {
+                    item[nodeName] = this.innerHTML;
+                }
+            });
+
+
             feed.items.push(item);
         });
     }
 };
-
