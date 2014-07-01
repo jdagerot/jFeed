@@ -56,7 +56,7 @@ JRss.prototype = {
                 }
             }
 
-            // Now let's go through all items and those not covered above will just be added by their native innerhtml code:
+            // Now let's go through all items and those not covered above will just be added by their native innerhtml code.
             t.children().each(function() {
                 var nodeName = this.nodeName.toLowerCase();
                 if (typeof item[nodeName] === 'undefined' || item[nodeName] === '') {
